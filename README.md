@@ -47,7 +47,7 @@ Update src/main/resources application.properties, set DB to postgres-db:
 spring.datasource.url=jdbc:postgresql://postgres-db:5432/shorten-db
 ```
 
-from url-shorten run commands:
+from the cloned repo dir location 'url-shorten' run commands:
 ```sh
 mvn package
 docker-compose -f docker-compose-db-springboot.yml up --build
@@ -69,6 +69,24 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/shorten-db
 Run docker-compose with .yml file"
 ```sh
 docker-compose -f docker-compose-db-only.yml up --build
+```
+
+## Usage
+
+### Generating and opening a shortened URL
+
+Invoke a Put request passing in the longUrl parameter which represents the URL to be shortened:
+
+```sh
+http://localhost:8080/shorten/?longUrl=https://www.google.com/
+```
+
+The returned shortened value is a mapping to the long URL and can be used to visit the long URL.
+
+To visit the page associated with the long URL using the shortened URL enter the following into browser replacing SHORTENED_URL with the shortened value returned by previous Put request:
+
+```sh
+http://localhost:8080/shorten/redirect/<SHORTENED_URL>
 ```
 
 ### Connecting to Docker PostgreSQL DB
@@ -105,25 +123,6 @@ Open the project your IDE.
 Download maven dependencies
 
 Run the main Spring book class
-
-
-## Usage
-
-### Generating and opening a shortened URL
-
-Invoke a Put request passing in the longUrl parameter which represents the URL to be shortened:
-
-```sh
-http://localhost:8080/shorten/?longUrl=https://www.google.com/
-```
-
-The returned shortened value is a mapping to the long URL and can be used to visit the long URL.
-
-To visit the page associated with the long URL using the shortened URL enter the following into browser replacing SHORTENED_URL with the shortened value returned by previous Put request:
-
-```sh
-http://localhost:8080/shorten/redirect/<SHORTENED_URL>
-```
 
 ### Swagger
 
