@@ -98,7 +98,7 @@ http://localhost:8080/shorten/redirect/SHORTENED_URL
 
 ### Connecting to Docker PostgreSQL DB
 
-Ensure postgres-db container is running (refer to section to "Running Docker DB instance only"). 
+Ensure postgres-db container is running. 
 
 Open a prompt and connect to container using: 
 ```sh
@@ -116,7 +116,7 @@ This project utilises one table, select query :
 select * from url_store;
 ```
 
-### Swagger
+## Swagger
 
 ![Screenshot](https://raw.githubusercontent.com/aronayne/public/6f826b65fc5c8aa317aa3e60934262298ead963e/Screenshot%202020-09-03%20at%2013.07.36.png)
 
