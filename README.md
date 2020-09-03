@@ -31,7 +31,7 @@ This project is tested with :
   
 ## Getting Started
 
-### Running and connecting as a single Docker instance
+### Running Spring Boot app PostGRES DB as a single Docker instance
 
 Steps to run PostgreSQL and the url-shorten Spring Boot app in a single Docker instance:
 
@@ -76,6 +76,8 @@ Download maven dependencies
 Run the main Spring book class located at src/main/java/ShortenApplication.java
 
 ## Usage
+
+Ensure Spring Boot app and DB is running as referenced in previous steps.
 
 ### Generating and opening a shortened URL
 
