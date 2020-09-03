@@ -116,18 +116,4 @@ public class UrlShortenService {
         return urlRepository.save(urlEntityToSave);
     }
 
-    private UrlEntity saveUrlEntityValue(String longUrl, LocalDate dateAdded) {
-        final String shortUrl = urlShorten.shortenURL(longUrl);
-        if (urlRepository.findFirstByShortUrl(shortUrl).isPresent()) {
-            logger.error("A short short URL collision occured for long URL: " + longUrl + " with generated short URL" + shortUrl);
-            throw new ShortUrlCollisionException("A short URL collision occured");
-        } else {
-            logger.info("Shortened URL: " + shortUrl);
-
-            final UrlEntity urlEntityToSave = new UrlEntity(dateAdded, longUrl, shortUrl);
-
-            return urlRepository.save(urlEntityToSave);
-        }
-    }
-
 }
