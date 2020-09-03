@@ -47,7 +47,6 @@ public interface UrlRepository extends JpaRepository<UrlEntity, Long> {
      * @param fromDate
      * @param toDate
      * @return the count of the URL entities added per day within a given date interval.
-     *
      */
     @Query(value = "SELECT count(dateadded) as count, dateadded as dateadded from url_store WHERE dateadded >= ? and dateadded <= ? group by dateadded order by dateadded desc",
             nativeQuery = true)

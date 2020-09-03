@@ -8,10 +8,11 @@ import java.util.List;
  * Implements various statistical calculations
  */
 @Component
-public class UrlShortenStatistics implements Statistics{
+public class UrlShortenStatistics implements Statistics {
 
     /**
      * Calculate the mean for List of value Double values
+     *
      * @param values
      * @return the mean for List of value Double values
      */
@@ -24,6 +25,7 @@ public class UrlShortenStatistics implements Statistics{
 
     /**
      * Calculate the standard deviation for a List of Double values
+     *
      * @param values
      * @return the standard deviation for a List of Double values
      */

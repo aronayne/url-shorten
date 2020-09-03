@@ -8,5 +8,6 @@ import java.util.List;
 public interface Statistics {
 
     Double calculateMean(List<Double> values);
+
     Double calculateStd(List<Double> values);
 }

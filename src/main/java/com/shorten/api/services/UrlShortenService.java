@@ -35,6 +35,7 @@ public class UrlShortenService {
 
     /**
      * Find all URL entities added within a date interval.
+     *
      * @param fromDate
      * @param toDate
      * @return
@@ -54,6 +55,7 @@ public class UrlShortenService {
 
     /**
      * Find a URL entity by it's id.
+     *
      * @param id
      * @return UrlEntity for a given id.
      */
@@ -77,6 +79,7 @@ public class UrlShortenService {
 
     /**
      * Save a URL entity
+     *
      * @param longUrl
      * @param dateAdded
      * @return the saved URL entity.
@@ -104,7 +107,7 @@ public class UrlShortenService {
         return urlRepository.save(urlEntityToSave);
     }
 
-    private UrlEntity saveUrlEntityValue(String longUrl, LocalDate dateAdded){
+    private UrlEntity saveUrlEntityValue(String longUrl, LocalDate dateAdded) {
         final String shortUrl = urlShorten.shortenURL(longUrl);
         if (urlRepository.findFirstByShortUrl(shortUrl).isPresent()) {
             logger.error("A short short URL collision occured for long URL: " + longUrl + " with generated short URL" + shortUrl);
