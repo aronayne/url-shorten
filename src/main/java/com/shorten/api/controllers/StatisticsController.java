@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class StatisticsController {
      * @return the mean, standard deviation
      */
     @GetMapping("/stats/{from}/{to}")
-    public StatsSummary getStatsSummary(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable Date from,
-                                        @DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable Date to) {
+    public StatsSummary getStatsSummary(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable LocalDate from,
+                                        @DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable LocalDate to) {
 
         logger.info("From" + from + ",to" + to);
 
@@ -55,8 +56,8 @@ public class StatisticsController {
      * @return
      */
     @GetMapping("/stats/addedCountByDay/{from}/{to}")
-    public List<CountByDay> getUrlCountbyDay(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable Date from,
-                                             @DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable Date to) {
+    public List<CountByDay> getUrlCountbyDay(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable LocalDate from,
+                                             @DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable LocalDate to) {
 
         logger.info("addedCountByDay" + from + ",to" + to);
 

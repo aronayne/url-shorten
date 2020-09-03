@@ -21,6 +21,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -54,8 +55,8 @@ public class StatsServiceTests {
     @Test
     public void testStatistics() {
 
-        Date date1 = Utilities.getDate("2019-08-16").get();
-        Date date2 = Utilities.getDate("2019-08-17").get();
+        LocalDate date1 = Utilities.getDate("2019-08-16");
+        LocalDate date2 = Utilities.getDate("2019-08-17");
 
         urlShortenService.saveUrlEntity("http://www.thisisalongurltest1.com", date1);
         urlShortenService.saveUrlEntity("http://www.thisisalongurltest2.com", date1);

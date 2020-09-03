@@ -1,5 +1,6 @@
 package com.shorten.api.service;
 
+import com.shorten.api.exception.InvalidDateException;
 import com.shorten.api.exception.LongUrlLengthExceededException;
 import com.shorten.api.exception.LongUrlNotFoundException;
 import com.shorten.api.model.StatsSummary;
@@ -21,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,12 +45,14 @@ public class UrlShortenServiceTests {
     @Autowired
     private StatsService statsService;
 
-    private static Date between(Date startInclusive, Date endExclusive) {
-        long startMillis = startInclusive.getTime();
-        long endMillis = endExclusive.getTime();
-        long randomMillisSinceEpoch = ThreadLocalRandom.current().nextLong(startMillis, endMillis);
 
-        return new Date(randomMillisSinceEpoch);
+
+    @Test
+    public void testInvalidDateException() {
+
+        exceptionRule.expect(InvalidDateException.class);
+        exceptionRule.expectMessage("The date is invalid");
+        urlShortenService.findAllByDateAddedBetween("2020-05-30" , "2020-12-323");
     }
 
     @Test
@@ -67,7 +71,7 @@ public class UrlShortenServiceTests {
         }
         exceptionRule.expect(LongUrlLengthExceededException.class);
         exceptionRule.expectMessage("URL with length 2000 exceeds the max length of 2000 characters");
-        urlShortenService.saveUrlEntity(sb.toString() , new Date());
+        urlShortenService.saveUrlEntity(sb.toString() , LocalDate.now());
     }
 
     static class Initializer

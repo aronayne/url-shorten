@@ -2,6 +2,7 @@ package com.shorten.api.model;
 
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,26 +16,26 @@ public class UrlEntity {
     private String longUrl;
     @Column(name = "shorturl")
     private String shortUrl;
-    @Temporal(TemporalType.TIMESTAMP)
+//    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateadded")
-    private Date dateAdded;
+    private LocalDate dateAdded;
 
     public UrlEntity() {
         super();
     }
 
-    public UrlEntity(Date dateAdded, String longUrl, String shortUrl) {
+    public UrlEntity(LocalDate dateAdded, String longUrl, String shortUrl) {
         super();
         this.dateAdded = dateAdded;
         this.longUrl = longUrl;
         this.shortUrl = shortUrl;
     }
 
-    public Date getDateAdded() {
+    public LocalDate getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(LocalDate dateAdded) {
         this.dateAdded = dateAdded;
     }
 

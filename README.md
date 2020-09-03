@@ -101,7 +101,7 @@ Enter on container :
 psql -U my_user -d shorten-db
 ```
 
-Sample query: 
+This project utilises one table, select query : 
 ```sh
 select * from url_store;
 ```

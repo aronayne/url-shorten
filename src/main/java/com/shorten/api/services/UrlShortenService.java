@@ -1,19 +1,18 @@
 package com.shorten.api.services;
 
-import com.shorten.api.exception.ShortUrlNotFoundException;
-import com.shorten.api.exception.ShortUrlCollisionException;
-import com.shorten.api.exception.LongUrlLengthExceededException;
-import com.shorten.api.exception.LongUrlNotFoundException;
+import com.shorten.api.exception.*;
 import com.shorten.api.model.URLShorten;
 import com.shorten.api.model.UrlEntity;
 import com.shorten.api.repositories.UrlRepository;
 import com.shorten.api.system.Constants;
+import com.shorten.api.validation.DateAddedValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,25 +20,30 @@ import java.util.Optional;
 public class UrlShortenService {
 
     private Logger logger = LoggerFactory.getLogger(UrlShortenService.class);
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
 
     private UrlRepository urlRepository;
-    private URLShorten urlCondenser;
+    private URLShorten urlShorten;
+    private DateAddedValidator dateAddedValidator;
 
     @Autowired
-    public UrlShortenService(UrlRepository urlRepository, URLShorten urlCondenser) {
+    public UrlShortenService(UrlRepository urlRepository, URLShorten urlShorten, DateAddedValidator dateAddedValidator) {
         this.urlRepository = urlRepository;
-        this.urlCondenser = urlCondenser;
+        this.urlShorten = urlShorten;
+        this.dateAddedValidator = dateAddedValidator;
     }
 
-    public List<UrlEntity> findAllByDateAddedBetween(final Date dateFrom, final Date dateTo) {
+    public List<UrlEntity> findAllByDateAddedBetween(final String fromDate, final String toDate) {
 
-        logger.info("Finding URL's added between" + dateFrom + " and " + dateTo);
-        return urlRepository.findAllByDateAddedBetween(dateFrom, dateTo);
+        if (!dateAddedValidator.isValid(fromDate) || !dateAddedValidator.isValid(toDate)) {
+            throw new InvalidDateException("The date is invalid");
+        } else {
+            LocalDate localFromDate = LocalDate.parse(fromDate, this.dateFormatter);
+            LocalDate localToDate = LocalDate.parse(toDate, this.dateFormatter);
 
-    }
-
-    public List<UrlEntity> findAll() {
-        return urlRepository.findAll();
+            logger.info("Finding URL's added between" + fromDate + " and " + toDate);
+            return urlRepository.findAllByDateAddedBetween(localFromDate, localToDate);
+        }
     }
 
     public Optional<UrlEntity> findById(final Long id) {
@@ -66,7 +70,7 @@ public class UrlShortenService {
      *
      * TODO: refactor this with a helper class for validation.
      */
-    public UrlEntity saveUrlEntity(String longUrl, Date dateAdded) {
+    public UrlEntity saveUrlEntity(String longUrl, LocalDate dateAdded) {
 
         int urlLength = longUrl.length();
         if (urlLength >= Constants.MAX_LONG_URL_LENGTH) {
@@ -77,7 +81,7 @@ public class UrlShortenService {
             if (urlEntity.size() > 0) {
                 return urlEntity.get(0);
             } else {
-                final String shortUrl = urlCondenser.shortenURL(longUrl);
+                final String shortUrl = urlShorten.shortenURL(longUrl);
                 if (urlRepository.findFirstByShortUrl(shortUrl).isPresent()) {
                     logger.error("A short short URL collision occured for long URL: " + longUrl + " with generated short URL" + shortUrl);
                     throw new ShortUrlCollisionException("A short URL collision occured");

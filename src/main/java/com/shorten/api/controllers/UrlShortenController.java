@@ -1,20 +1,22 @@
 package com.shorten.api.controllers;
 
+import com.shorten.api.exception.InvalidDateException;
 import com.shorten.api.model.UrlEntity;
-import com.shorten.api.repositories.UrlRepository;
 import com.shorten.api.services.UrlShortenService;
 import com.shorten.api.system.Constants;
-import com.shorten.api.system.Utilities;
+import com.shorten.api.validation.DateAddedValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 import java.net.URI;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,8 @@ import java.util.Optional;
  */
 @RestController
 public class UrlShortenController {
+
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
 
     private final UrlShortenService urlShortenService;
 
@@ -73,17 +77,18 @@ public class UrlShortenController {
 
     /**
      * Find all entities created within a Date time interval.
-     * @param from
-     * @param to
+     * @param fromDate
+     * @param toDate
      * @return all entities created within a Date time interval
      */
-    @GetMapping("/shorten/created/{from}/{to}")
-    public List<UrlEntity> findAllByDateAddedBetween(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable Date from,
-                                   @DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable Date to) {
+    @GetMapping("/shorten/created/{fromDate}/{toDate}")
+    public List<UrlEntity> findAllByDateAddedBetween(@PathVariable String fromDate, @PathVariable String toDate) {
 
-        logger.info("Finding long URL(s) created from dates " + from + " to " + to);
+        logger.info("Finding long URL(s) created from dates " + fromDate + " to " + toDate);
 
-        return urlShortenService.findAllByDateAddedBetween(from, to);
+         return urlShortenService.findAllByDateAddedBetween(fromDate, toDate);
+
+      //  }
     }
 
     /**
@@ -93,11 +98,11 @@ public class UrlShortenController {
      * @return shortened URL
      */
     @PutMapping("/shorten/")
-    public ResponseEntity<String> createShortenedUrl(@RequestParam String longUrl) {
+    public ResponseEntity<String> createShortenedUrl(@RequestParam @NotBlank @Max(2000) String longUrl) {
 
         logger.info("Long URL to convert is " + longUrl);
 
-            final Date dateAdded = Utilities.getTodayDate().get();
+            final LocalDate dateAdded = LocalDate.now();
             UrlEntity savedUrlEntity = urlShortenService.saveUrlEntity(longUrl, dateAdded);
 
             String shortUrl = savedUrlEntity.getShortUrl();

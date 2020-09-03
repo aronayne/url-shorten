@@ -10,6 +10,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,8 +28,8 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = {ShortenIntegrationTests.Initializer.class})
-public class ShortenIntegrationTests {
+@ContextConfiguration(initializers = {UrlShortenIntegrationTests.Initializer.class})
+public class UrlShortenIntegrationTests {
 
     @ClassRule
     public static PostgreSQLContainer postgres = new PostgreSQLContainer("postgres")
@@ -38,6 +39,15 @@ public class ShortenIntegrationTests {
 
     @Value("http://localhost:${local.server.port}")
     String baseUrl;
+
+    @Test
+    public void testInvalidToDate() {
+
+        given().get(baseUrl + "/shorten/created/2020-05-30/2020-12-33")
+                .then()
+                .statusCode(500);
+    }
+
 
     /**
      * Test can access a DB seeded entry.
@@ -52,7 +62,7 @@ public class ShortenIntegrationTests {
                 .body("id", equalTo(2))
                 .body("longUrl", equalTo("https://www.baeldung.com/configuration-properties-in-spring-boot-2"))
                 .body("shortUrl", equalTo("short13"))
-                .body("dateAdded", equalTo("2020-08-29T23:00:00.000+00:00"));
+                .body("dateAdded", equalTo("2020-08-30"));
     }
 
     @Test

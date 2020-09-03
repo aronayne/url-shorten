@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,13 +26,13 @@ public class StatsService {
         this.statistics = statistics;
     }
 
-    public List<CountByDay> getUrlCountByDay(final Date dateFrom, final Date dateTo) {
+    public List<CountByDay> getUrlCountByDay(final LocalDate dateFrom, final LocalDate dateTo) {
 
         logger.info("Finding count be day between dates " + dateFrom + " and " + dateTo);
         return urlRepository.getAddedCountByDay(dateFrom, dateTo);
     }
 
-    public StatsSummary getStatsSummary(final Date dateFrom, final Date dateTo) {
+    public StatsSummary getStatsSummary(final LocalDate dateFrom, final LocalDate dateTo) {
 
         logger.info("Calculating summary stats between dates " + dateFrom + " and " + dateTo);
         List<CountByDay> countByDay = urlRepository.getAddedCountByDay(dateFrom, dateTo);

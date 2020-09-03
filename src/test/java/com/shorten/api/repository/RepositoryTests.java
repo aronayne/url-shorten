@@ -20,6 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,20 +47,11 @@ public class RepositoryTests {
     @Autowired
     private URLShorten urlCondenser;
 
-    private static Date between(Date startInclusive, Date endExclusive) {
-        long startMillis = startInclusive.getTime();
-        long endMillis = endExclusive.getTime();
-        long randomMillisSinceEpoch = ThreadLocalRandom.current().nextLong(startMillis, endMillis);
-
-        return new Date(randomMillisSinceEpoch);
-    }
-
-
     @Test
     public void testInsert() {
 
         final String shortUrl = "test123";
-        urlRepository.save(new UrlEntity(new Date(), "https://www.amazon.com/Kindle-Wireless-Reading-Display-Globally/dp/B003FSUDM4/ref=amb_link_353259562_2?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=center-10&pf_rd_r=11EYKTN682A79T370AM3&pf_rd_t=201&pf_rd_p=1270985982&pf_rd_i=B002Y27P3M", shortUrl));
+            urlRepository.save(new UrlEntity(LocalDate.now(), "https://www.amazon.com/Kindle-Wireless-Reading-Display-Globally/dp/B003FSUDM4/ref=amb_link_353259562_2?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=center-10&pf_rd_r=11EYKTN682A79T370AM3&pf_rd_t=201&pf_rd_p=1270985982&pf_rd_i=B002Y27P3M", shortUrl));
 
         UrlEntity urlEntity = urlRepository.findFirstByShortUrl(shortUrl).get();
 
@@ -69,8 +61,8 @@ public class RepositoryTests {
     @Test
     public void testLargeInsert() {
 
-        Date fromDate = Utilities.getDate("2020-08-31").get();
-        Date toDate = Utilities.getDate("2020-10-31").get();
+        LocalDate fromDate = Utilities.getDate("2020-08-31");
+        LocalDate toDate = Utilities.getDate("2020-10-31");
 
         final int entriesToAdd = 1000;
 
@@ -78,7 +70,7 @@ public class RepositoryTests {
         for (int i = 0; i < entriesToAdd; i++) {
             String randomUrl = RandomStringUtils.randomAlphabetic(47);
             String shortUrl = urlCondenser.shortenURL(randomUrl);
-            UrlEntity u = new UrlEntity(between(fromDate, toDate), randomUrl, shortUrl);
+            UrlEntity u = new UrlEntity(fromDate, randomUrl, shortUrl);
             idList.add(urlRepository.save(u).getId());
         }
 
