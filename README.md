@@ -8,16 +8,12 @@
   * [Installation](#installation)
 * [Usage](#usage)
 
-
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
 This project converts a long URL to a short URL. The short URL can be used to open its associated long URL.
 
 
 A long URL of max length 2000 characters is converted to a short URL of 7 characters. The probability of a short URL collision is ((1 + number of URL's added) / 62^7).
-
 
 ### Built With
 
@@ -84,10 +80,10 @@ http://localhost:8080/shorten/?longUrl=https://www.google.com/
 
 The returned shortened value is a mapping to the long URL and can be used to visit the long URL.
 
-To visit the page associated using the short URL, enter the following URL into a browser (tested with Firefox) replacing SHORTENED_URL with the shortened value returned by previous Put request:
+To visit the page associated using the short URL, enter the following URL into a browser (tested with Firefox) and replace SHORTENED_URL with the shortened value returned by the previous Put request:
 
 ```sh
-http://localhost:8080/shorten/redirect/<SHORTENED_URL>
+http://localhost:8080/shorten/redirect/SHORTENED_URL
 ```
 
 ### Connecting to Docker PostgreSQL DB
@@ -123,13 +119,13 @@ Open the project your IDE.
 
 Download maven dependencies
 
-Run the main Spring book class
+Run the main Spring book class located at src/main/java/ShortenApplication.java
 
 ### Swagger
 
 ![Screenshot](https://raw.githubusercontent.com/aronayne/public/6f826b65fc5c8aa317aa3e60934262298ead963e/Screenshot%202020-09-03%20at%2013.07.36.png)
 
-After project install to view available services naviage to Swagger: 
+After project install to view available services navigate to Swagger: 
 ```sh
 http://localhost:8080/swagger-ui/ 
 ```
