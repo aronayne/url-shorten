@@ -127,6 +127,8 @@ Run the main Spring book class
 
 ### Swagger
 
+![Screenshot](https://raw.githubusercontent.com/aronayne/public/6f826b65fc5c8aa317aa3e60934262298ead963e/Screenshot%202020-09-03%20at%2013.07.36.png)
+
 After project install to view available services naviage to Swagger: 
 ```sh
 http://localhost:8080/swagger-ui/ 

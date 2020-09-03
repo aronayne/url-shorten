@@ -16,6 +16,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
+/**
+ * Rest API Swagger config.
+ */
 @Configuration
 @EnableSwagger2
 @Import({SpringDataRestConfiguration.class, BeanValidatorPluginsConfiguration.class})
@@ -23,13 +26,13 @@ public class SpringFoxConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "My REST API",
-                "Some custom description of API.",
-                "API TOS",
+                "URL Shorten API",
+                "This project converts a long URL to a short URL. The short URL can be used to open its associated long URL.",
+                "0.1",
                 "Terms of service",
-                new Contact("John Doe", "www.example.com", "myeaddress@company.com"),
-                "License of API",
-                "API license URL",
+                new Contact("Adrian Ronayne", "", "adrian.ronayne@gmail.com"),
+                "",
+                "",
                 Collections.emptyList());
     }
 
