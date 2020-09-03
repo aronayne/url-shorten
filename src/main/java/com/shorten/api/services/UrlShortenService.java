@@ -61,7 +61,16 @@ public class UrlShortenService {
      */
     public Optional<UrlEntity> findById(final Long id) {
         return urlRepository.findById(id).map(Optional::of)
-                .orElseThrow(() -> new LongUrlNotFoundException("URL not found for the given ID"));
+                .orElseThrow(() -> new UrlEntityNotFoundException("URL not found for the given ID"));
+    }
+
+    /**
+     * Delete a URL entity by it's id.
+     *
+     * @param id
+     */
+    public void deleteById(final Long id) {
+        urlRepository.deleteById(id);
     }
 
     /**

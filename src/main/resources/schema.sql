@@ -2,7 +2,7 @@ drop table URL_STORE;
 CREATE TABLE url_store
 
 (
- id SERIAL,
+ id BIGSERIAL,
  longurl varchar(2000) DEFAULT NULL UNIQUE,
  shorturl varchar(7) DEFAULT NULL UNIQUE,
  dateadded timestamp,

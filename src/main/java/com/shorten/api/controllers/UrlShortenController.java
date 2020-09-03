@@ -53,6 +53,20 @@ public class UrlShortenController {
     }
 
     /**
+     * Return the UrlEntity for a given id.
+     *
+     * @param id
+     * @return URL Entity for a given id.
+     */
+    @DeleteMapping("/shorten/{id}")
+    public ResponseEntity<String> deleteUrlById(@PathVariable Long id) {
+
+        urlShortenService.deleteById(id);
+        return new ResponseEntity<String>("item with id " + id + " deleted", HttpStatus.OK);
+
+    }
+
+    /**
      * Redirect a browser client to the long url URL a given short URL.
      *
      * @param shortUrl

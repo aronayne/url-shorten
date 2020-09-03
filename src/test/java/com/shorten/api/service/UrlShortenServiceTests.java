@@ -2,7 +2,7 @@ package com.shorten.api.service;
 
 import com.shorten.api.exception.InvalidDateException;
 import com.shorten.api.exception.LongUrlLengthExceededException;
-import com.shorten.api.exception.LongUrlNotFoundException;
+import com.shorten.api.exception.UrlEntityNotFoundException;
 import com.shorten.api.model.UrlEntity;
 import com.shorten.api.services.UrlShortenService;
 import org.assertj.core.api.Assertions;
@@ -73,7 +73,7 @@ public class UrlShortenServiceTests {
      */
     @Test
     public void testShortUrlNotFoundException() {
-        exceptionRule.expect(LongUrlNotFoundException.class);
+        exceptionRule.expect(UrlEntityNotFoundException.class);
         exceptionRule.expectMessage("URL not found for the given ID");
         urlShortenService.findById((long) 99999);
     }
@@ -103,6 +103,20 @@ public class UrlShortenServiceTests {
 
         Assertions.assertThat(urlEntity1.getShortUrl()).isEqualTo(urlEntity2.getShortUrl());
 
+    }
+
+    /**
+     * Test can delete the URL entity using the id
+     */
+    @Test
+    public void testDeleteById() {
+        UrlEntity urlEntity = urlShortenService.saveUrlEntity("www.testurl1234.com", LocalDate.now());
+        UrlEntity savedUrlEntity = urlShortenService.findById(urlEntity.getId()).get();
+        Assertions.assertThat(savedUrlEntity.getLongUrl()).isEqualTo("www.testurl1234.com");
+        urlShortenService.deleteById(urlEntity.getId());
+        exceptionRule.expect(UrlEntityNotFoundException.class);
+        exceptionRule.expectMessage("URL not found for the given ID");
+        urlShortenService.findById(urlEntity.getId());
     }
 
     static class Initializer

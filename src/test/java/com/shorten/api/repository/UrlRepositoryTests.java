@@ -25,10 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Test URL repository methods.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = {RepositoryTests.Initializer.class})
-public class RepositoryTests {
+@ContextConfiguration(initializers = {UrlRepositoryTests.Initializer.class})
+public class UrlRepositoryTests {
 
     @ClassRule
     public static PostgreSQLContainer postgres = new PostgreSQLContainer("postgres")
