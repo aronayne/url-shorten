@@ -30,6 +30,7 @@ This project is built with the following:
 
 This project is tested with :
 
+* [JUnit](https://junit.org/junit4/)
 * [rest-assured](http://rest-assured.io/)
   
 ## Getting Started
