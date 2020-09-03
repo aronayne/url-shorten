@@ -71,9 +71,9 @@ docker-compose -f docker-compose-db-only.yml up --build
 
 Ensure postgres-db container is running (refer to section to "Running Docker DB instance only"). 
 
-In a command open a prompt with: 
+Open a prompt and connect to container using: 
 ```sh
-docker-compose exec postgres-db bash
+docker-compose -f docker-compose-db-only.yml exec postgres-db bash
 ```
 
 Enter on container :
