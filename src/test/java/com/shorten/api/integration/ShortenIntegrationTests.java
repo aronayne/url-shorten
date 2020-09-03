@@ -40,7 +40,7 @@ public class ShortenIntegrationTests {
     String baseUrl;
 
     /**
-     * Test can access one of DB seeded entries.
+     * Test can access a DB seeded entry.
      */
     @Test
     public void testGetById() {

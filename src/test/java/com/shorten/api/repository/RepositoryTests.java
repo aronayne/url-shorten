@@ -1,4 +1,4 @@
-package com.shorten.api.service;
+package com.shorten.api.repository;
 
 import com.shorten.api.model.URLShorten;
 import com.shorten.api.model.UrlEntity;
@@ -64,8 +64,6 @@ public class RepositoryTests {
         UrlEntity urlEntity = urlRepository.findFirstByShortUrl(shortUrl).get();
 
         Assertions.assertThat(urlEntity.getShortUrl().length()).isEqualTo(Constants.SHORT_URL_LENGTH);
-
-        urlRepository.flush();
     }
 
     @Test

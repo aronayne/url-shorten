@@ -1,7 +1,7 @@
 package com.shorten.api.exception;
 
 /**
- * Exception class thrown in the rare case that a short url collision is thrown.
+ * Thrown in the rare case that a short URL collision is thrown.
  */
 public class ShortUrlCollisionException extends RuntimeException {
 

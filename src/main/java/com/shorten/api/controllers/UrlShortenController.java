@@ -2,7 +2,7 @@ package com.shorten.api.controllers;
 
 import com.shorten.api.model.UrlEntity;
 import com.shorten.api.repositories.UrlRepository;
-import com.shorten.api.services.UrlService;
+import com.shorten.api.services.UrlShortenService;
 import com.shorten.api.system.Constants;
 import com.shorten.api.system.Utilities;
 import org.slf4j.Logger;
@@ -19,18 +19,18 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Manages requests for url shortening functionality
+ * Manages requests for URL shortening functionality
  */
 @RestController
 public class UrlShortenController {
 
-    private final UrlService urlService;
+    private final UrlShortenService urlShortenService;
     private final UrlRepository urlRepository;
     Logger logger = LoggerFactory.getLogger(UrlShortenController.class);
 
     @Autowired
-    public UrlShortenController(UrlService urlService, UrlRepository urlRepository) {
-        this.urlService = urlService;
+    public UrlShortenController(UrlShortenService urlShortenService, UrlRepository urlRepository) {
+        this.urlShortenService = urlShortenService;
         this.urlRepository = urlRepository;
     }
 
@@ -42,7 +42,7 @@ public class UrlShortenController {
     @GetMapping("/shorten/{id}")
     public ResponseEntity<UrlEntity> retrieveUrlById(@PathVariable Long id) {
 
-        final Optional<UrlEntity> url = urlService.findById(id);
+        final Optional<UrlEntity> url = urlShortenService.findById(id);
 
         if (url.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,7 +60,7 @@ public class UrlShortenController {
     @GetMapping("/shorten/redirect/{shortUrl}")
     ResponseEntity<Void> redirect(@PathVariable String shortUrl) {
 
-        final Optional<String> url = urlService.findByShortUrl(shortUrl);
+        final Optional<String> url = urlShortenService.findByShortUrl(shortUrl);
 
         if (url.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -84,7 +84,7 @@ public class UrlShortenController {
 
         logger.info("Finding long URL(s) created from dates " + from + " to " + to);
 
-        return urlService.findAllByDateAddedBetween(from, to);
+        return urlShortenService.findAllByDateAddedBetween(from, to);
     }
 
     /**
@@ -99,7 +99,7 @@ public class UrlShortenController {
         logger.info("Long URL to convert is " + longUrl);
 
             final Date dateAdded = Utilities.getTodayDate().get();
-            UrlEntity savedUrlEntity = urlService.saveUrlEntity(longUrl, dateAdded);
+            UrlEntity savedUrlEntity = urlShortenService.saveUrlEntity(longUrl, dateAdded);
 
             String shortUrl = savedUrlEntity.getShortUrl();
             logger.info("Converted Long URL is " + shortUrl);

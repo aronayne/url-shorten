@@ -1,7 +1,7 @@
 package com.shorten.api.exception;
 
 /**
- * Exception class thrown when a long url is not found
+ * Thrown in the rare case that a short URL collision is thrown.
  */
 public class LongUrlNotFoundException extends RuntimeException {
 

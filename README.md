@@ -16,7 +16,7 @@
 This project converts a long URL to a short URL. The short URL can be used to open its associated long URL.
 
 
-A long URL of max length 2000 characters is converted to a short URL of 7 characters. The probability of a short URL collision is ((1 + number of URL's added) / 62^7)
+A long URL of max length 2000 characters is converted to a short URL of 7 characters. The probability of a short URL collision is ((1 + number of URL's added) / 62^7).
 
 
 ### Built With

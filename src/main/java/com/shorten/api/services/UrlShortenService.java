@@ -1,9 +1,9 @@
 package com.shorten.api.services;
 
-import com.shorten.api.exception.LongUrlNotFoundException;
+import com.shorten.api.exception.ShortUrlNotFoundException;
 import com.shorten.api.exception.ShortUrlCollisionException;
-import com.shorten.api.exception.UrlLengthExceededException;
-import com.shorten.api.exception.UrlNotFoundException;
+import com.shorten.api.exception.LongUrlLengthExceededException;
+import com.shorten.api.exception.LongUrlNotFoundException;
 import com.shorten.api.model.URLShorten;
 import com.shorten.api.model.UrlEntity;
 import com.shorten.api.repositories.UrlRepository;
@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UrlService {
+public class UrlShortenService {
 
-    Logger logger = LoggerFactory.getLogger(UrlService.class);
+    Logger logger = LoggerFactory.getLogger(UrlShortenService.class);
 
     @Autowired
     private UrlRepository urlRepository;
@@ -33,9 +33,6 @@ public class UrlService {
         logger.info("Finding URL's added between" + dateFrom + " and " + dateTo);
         return urlRepository.findAllByDateAddedBetween(dateFrom, dateTo);
 
-//        SummaryResult sr = new SummaryResult("1", "0", ".5");
-
-//        return sr;
     }
 
     public List<UrlEntity> findAll() {
@@ -44,7 +41,7 @@ public class UrlService {
 
     public Optional<UrlEntity> findById(final Long id) {
         return urlRepository.findById(id).map(Optional::of)
-                .orElseThrow(() -> new UrlNotFoundException("URL not found for the given ID"));
+                .orElseThrow(() -> new LongUrlNotFoundException("URL not found for the given ID"));
     }
 
     /**
@@ -57,7 +54,7 @@ public class UrlService {
         return urlRepository.findFirstByShortUrl(shortUrl)
                 .map(UrlEntity::getLongUrl)
                 .map(Optional::of)
-                .orElseThrow(() -> new LongUrlNotFoundException("Long URL not found for the given short URL"));
+                .orElseThrow(() -> new ShortUrlNotFoundException("Long URL not found for the given short URL"));
     }
 
     /**
@@ -70,7 +67,7 @@ public class UrlService {
 
         int urlLength = longUrl.length();
         if (urlLength >= Constants.MAX_LONG_URL_LENGTH) {
-            throw new UrlLengthExceededException("URL with length " + urlLength + " exceeds the max length of " + Constants.MAX_LONG_URL_LENGTH + " characters");
+            throw new LongUrlLengthExceededException("URL with length " + urlLength + " exceeds the max length of " + Constants.MAX_LONG_URL_LENGTH + " characters");
         } else {
 
             List<UrlEntity> urlEntity = urlRepository.findByLongUrl(longUrl);
