@@ -17,10 +17,10 @@ import java.util.Optional;
 public interface UrlRepository extends JpaRepository<UrlEntity, Long> {
 
     /**
-     * Find a Url entity by it's shortUrl mapping
+     * Find a Url entity using the shortUrl mapping
      *
      * @param shortUrl
-     * @return
+     * @return Url entity using the shortUrl mapping
      */
     Optional<UrlEntity> findFirstByShortUrl(String shortUrl);
 
@@ -30,7 +30,7 @@ public interface UrlRepository extends JpaRepository<UrlEntity, Long> {
      * @param longUrl
      * @return URL entity by it's longUrl mapping
      */
-    List<UrlEntity> findByLongUrl(String longUrl);
+    Optional<UrlEntity> findFirstByLongUrl(String longUrl);
 
     /**
      * Find the URL entities added within a given date interval.

@@ -88,9 +88,9 @@ public class UrlShortenService {
             throw new LongUrlLengthExceededException("URL with length " + urlLength + " exceeds the max length of " + Constants.MAX_LONG_URL_LENGTH + " characters");
         }
 
-        final List<UrlEntity> urlEntity = urlRepository.findByLongUrl(longUrl);
-        if (!urlEntity.isEmpty()) {
-            return urlEntity.get(0);
+        final Optional<UrlEntity> urlEntity = urlRepository.findFirstByLongUrl(longUrl);
+        if (urlEntity.isPresent()) {
+            return urlEntity.get();
         }
 
         final String shortUrl = urlShorten.shortenURL(longUrl);

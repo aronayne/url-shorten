@@ -34,10 +34,6 @@ public class StatsIntegrationTests {
             .withPassword("my_password");
     @Value("http://localhost:${local.server.port}")
     String baseUrl;
-    @Autowired
-    private UrlShortenService urlShortenService;
-    @Autowired
-    private StatsService statsService;
 
     /**
      * Test the number of items added per day. This uses the seeded DB data.
