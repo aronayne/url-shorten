@@ -2,6 +2,8 @@ package com.shorten.api.controllers;
 
 import com.shorten.api.model.CountByDay;
 import com.shorten.api.model.StatsSummary;
+import com.shorten.api.model.URLShorten;
+import com.shorten.api.repositories.UrlRepository;
 import com.shorten.api.services.StatsService;
 import com.shorten.api.system.Constants;
 import org.slf4j.Logger;
@@ -23,8 +25,12 @@ public class StatisticsController {
 
     Logger logger = LoggerFactory.getLogger(StatisticsController.class);
 
-    @Autowired
     private StatsService statsService;
+
+    @Autowired
+    public StatisticsController(StatsService statsService) {
+        this.statsService = statsService;
+    }
 
     /**
      * Calculate per day a statistics summary of items added within a Date range.

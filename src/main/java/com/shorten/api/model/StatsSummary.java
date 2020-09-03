@@ -1,5 +1,8 @@
 package com.shorten.api.model;
 
+/**
+ *
+ */
 public class StatsSummary {
 
     private Double meanPerDay;

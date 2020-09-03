@@ -25,19 +25,18 @@ import java.util.Optional;
 public class UrlShortenController {
 
     private final UrlShortenService urlShortenService;
-    private final UrlRepository urlRepository;
-    Logger logger = LoggerFactory.getLogger(UrlShortenController.class);
+
+    private Logger logger = LoggerFactory.getLogger(UrlShortenController.class);
 
     @Autowired
-    public UrlShortenController(UrlShortenService urlShortenService, UrlRepository urlRepository) {
+    public UrlShortenController(UrlShortenService urlShortenService) {
         this.urlShortenService = urlShortenService;
-        this.urlRepository = urlRepository;
     }
 
     /**
-     * Return the url entity by it's ID.
+     * Return the UrlEntity by it's ID.
      * @param id
-     * @return
+     * @return UrlEntity
      */
     @GetMapping("/shorten/{id}")
     public ResponseEntity<UrlEntity> retrieveUrlById(@PathVariable Long id) {
@@ -58,7 +57,7 @@ public class UrlShortenController {
      * @return
      */
     @GetMapping("/shorten/redirect/{shortUrl}")
-    ResponseEntity<Void> redirect(@PathVariable String shortUrl) {
+    ResponseEntity<?> redirect(@PathVariable String shortUrl) {
 
         final Optional<String> url = urlShortenService.findByShortUrl(shortUrl);
 
@@ -73,10 +72,10 @@ public class UrlShortenController {
     }
 
     /**
-     * Find all entities creaeted within a Date time interval.
+     * Find all entities created within a Date time interval.
      * @param from
      * @param to
-     * @return
+     * @return all entities created within a Date time interval
      */
     @GetMapping("/shorten/created/{from}/{to}")
     public List<UrlEntity> findAllByDateAddedBetween(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable Date from,
@@ -88,13 +87,13 @@ public class UrlShortenController {
     }
 
     /**
-     * Create a shortened Url from a long Url
+     * Create a shortened URL from a long URL
      *
      * @param longUrl
-     * @return shortened Url
+     * @return shortened URL
      */
     @PutMapping("/shorten/")
-    public ResponseEntity<?> createShortenedUrl(@RequestParam String longUrl) {
+    public ResponseEntity<String> createShortenedUrl(@RequestParam String longUrl) {
 
         logger.info("Long URL to convert is " + longUrl);
 
@@ -104,7 +103,7 @@ public class UrlShortenController {
             String shortUrl = savedUrlEntity.getShortUrl();
             logger.info("Converted Long URL is " + shortUrl);
 
-            return new ResponseEntity<>(shortUrl, HttpStatus.OK);
+            return new ResponseEntity<String>(shortUrl, HttpStatus.OK);
 
     }
 }

@@ -20,13 +20,16 @@ import java.util.Optional;
 @Service
 public class UrlShortenService {
 
-    Logger logger = LoggerFactory.getLogger(UrlShortenService.class);
+    private Logger logger = LoggerFactory.getLogger(UrlShortenService.class);
 
-    @Autowired
     private UrlRepository urlRepository;
+    private URLShorten urlCondenser;
 
     @Autowired
-    private URLShorten urlCondenser;
+    public UrlShortenService(UrlRepository urlRepository, URLShorten urlCondenser) {
+        this.urlRepository = urlRepository;
+        this.urlCondenser = urlCondenser;
+    }
 
     public List<UrlEntity> findAllByDateAddedBetween(final Date dateFrom, final Date dateTo) {
 

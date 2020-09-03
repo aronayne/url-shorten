@@ -28,24 +28,23 @@ This project is built with the following:
 * [PostgreSQL](https://www.postgresql.org/)
 * [Apache Maven](https://maven.apache.org/)
 
-
 ## Getting Started
 
 ### Running and connecting as a single Docker instance
 
 Steps to run PostgreSQL and Spring Boot in a single Docker instance.
 
-1. Update src/main/resources application.properties, set DB to local: spring.datasource.urlEntity=jdbc:postgresql://localhost:5432/shorten-db
+1. Update src/main/resources application.properties, set DB to local: spring.datasource.url=jdbc:postgresql://postgres-db:5432/shorten-db
 
-2. mvn package
-
+Run commands:
+```sh
+mvn package
 3. docker-compose -f docker-compose-db-springboot.yml up --build
+```
 
 ### Running Docker DB instance only (for local development)
 
-1. Update src/main/resources application.properties, set DB to local: spring.datasource.urlEntity=jdbc:postgresql://localhost:5432/shorten-db
-
-2. mvn package
+1. Update src/main/resources application.properties, set DB to local: spring.datasource.url=jdbc:postgresql://localhost:5432/shorten-db
 
 3. docker-compose -f docker-compose-db-only.yml up --build
 
@@ -82,23 +81,16 @@ git clone https://github.com/aronayne/url-shorten
 git clone https://github.com/aronayne/url-shorten
 ```
 
-Run commands:
+<!-- 2. Run commands:
 ```sh
 mvn package
-docker build -t urlEntity-shorten/urlEntity-shorten-docker .
-docker run -p 8080:8080 urlEntity-shorten/urlEntity-shorten-docker
+docker build -t url-shorten/url-shorten-docker .
+docker run -p 8080:8080 url-shorten/url-shorten-docker
 ```
-
+ -->
 ## Usage
 
-## Swagger
-
-After project install to view available services naviage to Swagger: 
-http://localhost:8080/swagger-ui/ . 
-
-To view swagger endpoints as JSON: http://localhost:8080/v2/api-docs
-
-## Generating and opening a shortened URL
+### Generating and opening a shortened URL
 
 Invoke Put request:
 
@@ -107,5 +99,14 @@ http://localhost:8080/shorten/?longUrl=https://www.google.com/ , the returned sh
 To visit the page with the shortened URL enter the following into browser replacing SHORTENED_URL with the shortened value returned by previous Put request:
 
 http://localhost:8080/shorten/redirect/<SHORTENED_URL>
+
+### Swagger
+
+After project install to view available services naviage to Swagger: 
+http://localhost:8080/swagger-ui/ . 
+
+To view swagger endpoints as JSON: http://localhost:8080/v2/api-docs
+
+
 
 
