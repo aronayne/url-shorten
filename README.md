@@ -1,0 +1,125 @@
+
+## Table of Contents
+
+* [About the Project](#about-the-project)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+* [Usage](#usage)
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+This project converts a long URL to a short one allows the user to utilise the short URL to open its associated long URL.
+
+
+A long URL of max length 2000 characters is converted to a short URL of 7 characters. The of URL's capacity before short URL collisions is 62^7. The probability of a short URL collision is ((1 + number of Url's added) / 62^7)
+
+
+### Built With
+
+This project is built with the following:
+
+* [Docker](https://www.docker.com/)
+* [Spring Boot](https://spring.io/projects/spring-boot)
+* [PostgreSQL](https://www.postgresql.org/)
+* [Apache Maven](https://maven.apache.org/)
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+### Running and connecting as a single Docker instance
+
+Steps to run PostgreSQL and Spring Boot in a single Docker instance.
+
+1. Update src/main/resources application.properties, set DB to local: spring.datasource.urlEntity=jdbc:postgresql://localhost:5432/shorten-db
+
+2. mvn package
+
+3. docker-compose -f docker-compose-db-springboot.yml up --build
+
+### Running Docker DB instance only (for local development)
+
+1. Update src/main/resources application.properties, set DB to local: spring.datasource.urlEntity=jdbc:postgresql://localhost:5432/shorten-db
+
+2. mvn package
+
+3. docker-compose -f docker-compose-db-only.yml up --build
+
+### Connecting to Docker Database
+
+1. In a separate command window open a prompt with: docker-compose exec postgres-db bash
+
+2. enter on container : psql -U my_user -d shorten-db
+
+3. Sample query: 
+```sh
+select * from url_store;
+```
+
+
+### Prerequisites
+
+This is an example of how to list things you need to use the software and how to install them.
+* npm
+```sh
+npm install npm@latest -g
+```
+
+### Installation
+
+#### IDE
+
+1. Clone the repo
+```sh
+git clone <REPO URL>
+```
+2. Open the project your IDE.
+```sh
+npm install
+```
+4. Download maven dependencies
+
+4. Run the main Spring book class
+
+
+#### Docker Install
+
+1. Clone the repo
+```sh
+git clone <REPO URL>
+```
+
+1. mvn package
+
+2. docker build -t urlEntity-shorten/urlEntity-shorten-docker .
+
+3. docker run -p 8080:8080 urlEntity-shorten/urlEntity-shorten-docker
+
+4. Test with: 
+<!-- USAGE EXAMPLES -->
+## Usage
+
+## Swagger
+
+After project install to view available services naviage to Swagger: 
+http://localhost:8080/swagger-ui/ . 
+
+To view swagger endpoints as JSON: http://localhost:8080/v2/api-docs
+
+## Generating and opening a shortened URL
+
+Invoke Put request:
+
+http://localhost:8080/shorten/?longUrl=https://www.google.com/ , the returned shortened value is used to generated a long URL.
+
+To visit the page with the shortened URL enter the following into browser replacing SHORTENED_URL with the shortened value returned by previous Put request:
+
+http://localhost:8080/shorten/redirect/<SHORTENED_URL>
+
+
