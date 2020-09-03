@@ -31,7 +31,7 @@ This project is tested with :
   
 ## Getting Started
 
-### Running Spring Boot app PostGRES DB as a single Docker instance
+### Running Spring Boot app & PostgreSQL in a single Docker container
 
 Steps to run PostgreSQL and the url-shorten Spring Boot app in a single Docker instance:
 
@@ -50,7 +50,7 @@ mvn package
 docker-compose -f docker-compose-db-springboot.yml up --build
 ```
 
-### Running Docker DB instance only to facilitate local development.
+### Running PostgreSQL DB in a Docker container to facilitate local development.
 
 Just run the DB in a Docker process 
 
