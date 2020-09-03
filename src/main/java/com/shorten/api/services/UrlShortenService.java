@@ -33,6 +33,12 @@ public class UrlShortenService {
         this.dateAddedValidator = dateAddedValidator;
     }
 
+    /**
+     * Find all URL entities added within a date interval.
+     * @param fromDate
+     * @param toDate
+     * @return
+     */
     public List<UrlEntity> findAllByDateAddedBetween(final String fromDate, final String toDate) {
 
         if (!dateAddedValidator.isValid(fromDate) || !dateAddedValidator.isValid(toDate)) {
@@ -46,16 +52,21 @@ public class UrlShortenService {
         }
     }
 
+    /**
+     * Find a URL entity by it's id.
+     * @param id
+     * @return UrlEntity for a given id.
+     */
     public Optional<UrlEntity> findById(final Long id) {
         return urlRepository.findById(id).map(Optional::of)
                 .orElseThrow(() -> new LongUrlNotFoundException("URL not found for the given ID"));
     }
 
     /**
-     * For a given shortUrl return it's corresponding longUrl
+     * For a given shortUrl return it's corresponding long URL
      *
      * @param shortUrl
-     * @return
+     * @return the long URL associated with a short URL.
      */
     public Optional<String> findByShortUrl(final String shortUrl) {
         return urlRepository.findFirstByShortUrl(shortUrl)
@@ -66,9 +77,7 @@ public class UrlShortenService {
 
     /**
      * @param longUrl
-     * @return
-     *
-     * TODO: refactor this with a helper class for validation.
+     * @return TODO: refactor this with a helper class for validation.
      */
     public UrlEntity saveUrlEntity(String longUrl, LocalDate dateAdded) {
 
@@ -76,23 +85,26 @@ public class UrlShortenService {
         if (urlLength >= Constants.MAX_LONG_URL_LENGTH) {
             throw new LongUrlLengthExceededException("URL with length " + urlLength + " exceeds the max length of " + Constants.MAX_LONG_URL_LENGTH + " characters");
         } else {
-
             List<UrlEntity> urlEntity = urlRepository.findByLongUrl(longUrl);
             if (urlEntity.size() > 0) {
                 return urlEntity.get(0);
             } else {
-                final String shortUrl = urlShorten.shortenURL(longUrl);
-                if (urlRepository.findFirstByShortUrl(shortUrl).isPresent()) {
-                    logger.error("A short short URL collision occured for long URL: " + longUrl + " with generated short URL" + shortUrl);
-                    throw new ShortUrlCollisionException("A short URL collision occured");
-                } else {
-                    logger.info("Shortened URL: " + shortUrl);
-
-                    final UrlEntity urlEntityToSave = new UrlEntity(dateAdded, longUrl, shortUrl);
-
-                    return urlRepository.save(urlEntityToSave);
-                }
+                return saveUrlEntityValue(longUrl, dateAdded);
             }
+        }
+    }
+
+    private UrlEntity saveUrlEntityValue(String longUrl, LocalDate dateAdded){
+        final String shortUrl = urlShorten.shortenURL(longUrl);
+        if (urlRepository.findFirstByShortUrl(shortUrl).isPresent()) {
+            logger.error("A short short URL collision occured for long URL: " + longUrl + " with generated short URL" + shortUrl);
+            throw new ShortUrlCollisionException("A short URL collision occured");
+        } else {
+            logger.info("Shortened URL: " + shortUrl);
+
+            final UrlEntity urlEntityToSave = new UrlEntity(dateAdded, longUrl, shortUrl);
+
+            return urlRepository.save(urlEntityToSave);
         }
     }
 

@@ -49,7 +49,6 @@ public class SpringFoxConfig {
     /**
      * SwaggerUI information
      */
-
     @Bean
     UiConfiguration uiConfig() {
         return UiConfigurationBuilder.builder()

@@ -2,7 +2,6 @@ package com.shorten.api.integration;
 
 import com.shorten.api.services.StatsService;
 import com.shorten.api.services.UrlShortenService;
-import org.hamcrest.Matchers;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +39,9 @@ public class StatsIntegrationTests {
     @Autowired
     private StatsService statsService;
 
+    /**
+     * Test the number of items added per day. This uses the seeded DB data.
+     */
     @Test
     public void testItemsAddedPerDayService() {
 
@@ -50,11 +52,20 @@ public class StatsIntegrationTests {
                 .then()
                 .statusCode(200)
                 .body("size()", is(4))
-                .body("[0].dateAdded", equalTo("2020-08-26T23:00:00.000+00:00"))
-                .body("[0].count", equalTo(1));
+                .body("[0].dateAdded", equalTo("2020-08-29T23:00:00.000+00:00"))
+                .body("[0].count", equalTo(2))
+                .body("[1].dateAdded", equalTo("2020-08-28T23:00:00.000+00:00"))
+                .body("[1].count", equalTo(2))
+                .body("[2].dateAdded", equalTo("2020-08-27T23:00:00.000+00:00"))
+                .body("[2].count", equalTo(1))
+                .body("[3].dateAdded", equalTo("2020-08-26T23:00:00.000+00:00"))
+                .body("[3].count", equalTo(1));
 
     }
 
+    /**
+     * Test the top level API endpoint
+     */
     @Test
     public void testBaseUrl() {
 

@@ -1,10 +1,8 @@
 package com.shorten.api.controllers;
 
-import com.shorten.api.exception.InvalidDateException;
 import com.shorten.api.model.UrlEntity;
 import com.shorten.api.services.UrlShortenService;
 import com.shorten.api.system.Constants;
-import com.shorten.api.validation.DateAddedValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +24,8 @@ import java.util.Optional;
 @RestController
 public class UrlShortenController {
 
-    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
-
     private final UrlShortenService urlShortenService;
-
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
     private Logger logger = LoggerFactory.getLogger(UrlShortenController.class);
 
     @Autowired
@@ -38,9 +34,10 @@ public class UrlShortenController {
     }
 
     /**
-     * Return the UrlEntity by it's ID.
+     * Return the UrlEntity for a given id.
+     *
      * @param id
-     * @return UrlEntity
+     * @return URL Entity for a given id.
      */
     @GetMapping("/shorten/{id}")
     public ResponseEntity<UrlEntity> retrieveUrlById(@PathVariable Long id) {
@@ -56,9 +53,10 @@ public class UrlShortenController {
     }
 
     /**
-     * Redirect a browser client to the long url for a given short url.
+     * Redirect a browser client to the long url URL a given short URL.
+     *
      * @param shortUrl
-     * @return
+     * @return Redirects the client browser to the long URL associated with the short URL.
      */
     @GetMapping("/shorten/redirect/{shortUrl}")
     ResponseEntity<?> redirect(@PathVariable String shortUrl) {
@@ -77,6 +75,7 @@ public class UrlShortenController {
 
     /**
      * Find all entities created within a Date time interval.
+     *
      * @param fromDate
      * @param toDate
      * @return all entities created within a Date time interval
@@ -86,13 +85,12 @@ public class UrlShortenController {
 
         logger.info("Finding long URL(s) created from dates " + fromDate + " to " + toDate);
 
-         return urlShortenService.findAllByDateAddedBetween(fromDate, toDate);
-
-      //  }
+        return urlShortenService.findAllByDateAddedBetween(fromDate, toDate);
     }
 
     /**
-     * Create a shortened URL from a long URL
+     * Create a shortened URL from a long URL. If the long URL already contains a short URL mapping the short URL mapping
+     * value is reused as the return value.
      *
      * @param longUrl
      * @return shortened URL
@@ -102,13 +100,13 @@ public class UrlShortenController {
 
         logger.info("Long URL to convert is " + longUrl);
 
-            final LocalDate dateAdded = LocalDate.now();
-            UrlEntity savedUrlEntity = urlShortenService.saveUrlEntity(longUrl, dateAdded);
+        final LocalDate dateAdded = LocalDate.now();
+        UrlEntity savedUrlEntity = urlShortenService.saveUrlEntity(longUrl, dateAdded);
 
-            String shortUrl = savedUrlEntity.getShortUrl();
-            logger.info("Converted Long URL is " + shortUrl);
+        String shortUrl = savedUrlEntity.getShortUrl();
+        logger.info("Converted Long URL is " + shortUrl);
 
-            return new ResponseEntity<String>(shortUrl, HttpStatus.OK);
+        return new ResponseEntity<String>(shortUrl, HttpStatus.OK);
 
     }
 }

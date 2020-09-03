@@ -3,10 +3,8 @@ package com.shorten.api.service;
 import com.shorten.api.exception.InvalidDateException;
 import com.shorten.api.exception.LongUrlLengthExceededException;
 import com.shorten.api.exception.LongUrlNotFoundException;
-import com.shorten.api.model.StatsSummary;
-import com.shorten.api.services.StatsService;
+import com.shorten.api.model.UrlEntity;
 import com.shorten.api.services.UrlShortenService;
-import com.shorten.api.system.Utilities;
 import org.assertj.core.api.Assertions;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -23,8 +21,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.concurrent.ThreadLocalRandom;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -42,19 +38,39 @@ public class UrlShortenServiceTests {
     @Autowired
     private UrlShortenService urlShortenService;
 
-    @Autowired
-    private StatsService statsService;
-
-
-
+    /**
+     * Test InvalidDateException is thrown when an invalid from date is used to search for URL entities.
+     */
     @Test
-    public void testInvalidDateException() {
-
+    public void testInvalidFromDateException() {
         exceptionRule.expect(InvalidDateException.class);
         exceptionRule.expectMessage("The date is invalid");
-        urlShortenService.findAllByDateAddedBetween("2020-05-30" , "2020-12-323");
+        urlShortenService.findAllByDateAddedBetween("2020-05-33", "2020-12-05");
     }
 
+    /**
+     * Test InvalidDateException is thrown when an invalid to date is used to search for URL entities.
+     */
+    @Test
+    public void testInvalidToDateException() {
+        exceptionRule.expect(InvalidDateException.class);
+        exceptionRule.expectMessage("The date is invalid");
+        urlShortenService.findAllByDateAddedBetween("2020-05-30", "2020-12-323");
+    }
+
+    /**
+     * Test InvalidDateException is thrown when an invalid from date and to date is used to search for URL entities.
+     */
+    @Test
+    public void testInvalidFromAndToDateException() {
+        exceptionRule.expect(InvalidDateException.class);
+        exceptionRule.expectMessage("The date is invalid");
+        urlShortenService.findAllByDateAddedBetween("2020-05-33", "2020-12-323");
+    }
+
+    /**
+     * Test LongUrlNotFoundException is thrown when URL is not found for a short URL
+     */
     @Test
     public void testShortUrlNotFoundException() {
         exceptionRule.expect(LongUrlNotFoundException.class);
@@ -62,6 +78,9 @@ public class UrlShortenServiceTests {
         urlShortenService.findById((long) 99999);
     }
 
+    /**
+     * Test LongUrlLengthExceededException is thrown when the length of long URL exceeds 2000 characters
+     */
     @Test
     public void testLongUrlLengthExceeded() {
 
@@ -71,7 +90,19 @@ public class UrlShortenServiceTests {
         }
         exceptionRule.expect(LongUrlLengthExceededException.class);
         exceptionRule.expectMessage("URL with length 2000 exceeds the max length of 2000 characters");
-        urlShortenService.saveUrlEntity(sb.toString() , LocalDate.now());
+        urlShortenService.saveUrlEntity(sb.toString(), LocalDate.now());
+    }
+
+    /**
+     * Test the short URL is reused when multiple long URL's are shortened.
+     */
+    @Test
+    public void testShortUrlReused() {
+        UrlEntity urlEntity1 = urlShortenService.saveUrlEntity("www.testurl.com", LocalDate.now());
+        UrlEntity urlEntity2 = urlShortenService.saveUrlEntity("www.testurl.com", LocalDate.now());
+
+        Assertions.assertThat(urlEntity1.getShortUrl()).isEqualTo(urlEntity2.getShortUrl());
+
     }
 
     static class Initializer

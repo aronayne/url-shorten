@@ -1,5 +1,8 @@
 package com.shorten.api.system;
 
+/**
+ * Application scope constants used throughout the app.
+ */
 public class Constants {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd";

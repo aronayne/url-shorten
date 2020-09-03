@@ -7,8 +7,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Manages how dates are validated
+ */
 @Component
-public class DateAddedValidator implements DateValidator{
+public class DateAddedValidator implements DateValidator {
 
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
 

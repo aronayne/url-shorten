@@ -1,7 +1,5 @@
 package com.shorten.api.service;
 
-import com.shorten.api.exception.LongUrlLengthExceededException;
-import com.shorten.api.exception.LongUrlNotFoundException;
 import com.shorten.api.model.StatsSummary;
 import com.shorten.api.services.StatsService;
 import com.shorten.api.services.UrlShortenService;
@@ -52,8 +50,11 @@ public class StatsServiceTests {
         return new Date(randomMillisSinceEpoch);
     }
 
+    /**
+     * Test the mean and standard deviation calculations
+     */
     @Test
-    public void testStatistics() {
+    public void testMeanAndStd() {
 
         LocalDate date1 = Utilities.getDate("2019-08-16");
         LocalDate date2 = Utilities.getDate("2019-08-17");

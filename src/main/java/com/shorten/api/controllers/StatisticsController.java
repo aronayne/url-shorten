@@ -2,8 +2,6 @@ package com.shorten.api.controllers;
 
 import com.shorten.api.model.CountByDay;
 import com.shorten.api.model.StatsSummary;
-import com.shorten.api.model.URLShorten;
-import com.shorten.api.repositories.UrlRepository;
 import com.shorten.api.services.StatsService;
 import com.shorten.api.system.Constants;
 import org.slf4j.Logger;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +32,7 @@ public class StatisticsController {
 
     /**
      * Calculate per day a statistics summary of items added within a Date range.
+     *
      * @param from
      * @param to
      * @return the mean, standard deviation
@@ -50,10 +48,11 @@ public class StatisticsController {
     }
 
     /**
-     * Calculate teh number of distinct long url's added per day.
+     * Calculate the number of distinct long URL's added per day.
+     *
      * @param from
      * @param to
-     * @return
+     * @return the number of distinct long URL's added per day.
      */
     @GetMapping("/stats/addedCountByDay/{from}/{to}")
     public List<CountByDay> getUrlCountbyDay(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable LocalDate from,

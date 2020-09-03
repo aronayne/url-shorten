@@ -13,20 +13,18 @@ import java.util.Random;
 public class URLShorten {
 
     private static final int MAX_CHARACTER_POSITION = 62;
-    private final Random random = new Random(); // Random object used to generate random integers
-    private char[] characters = new char[62]; // This array is used for character to number
-    private int keyLength;
+    private final Random random = new Random();
+    private char[] characters = new char[62];
 
     public URLShorten() {
 
         this.initialiseCharacterArray();
-        this.keyLength = Constants.SHORT_URL_LENGTH;
 
     }
 
     /**
      * Initialise the character array ascii value mappings.
-     *
+     * <p>
      * Ascii Characters from  '0' to '9' , add 48
      * Uppercase characters begin at 65 in ascii table (55+10), end at 90
      * Lowercase characters begin at 97 in ascii table (61+36), end at postion 122
@@ -45,14 +43,14 @@ public class URLShorten {
     }
 
     /**
-     * Convert a long URL to a shortened String
+     * Convert a long URL to a short URL
      *
      * @param longURL
-     * @return
+     * @return a short URL representation of the paramter longURL
      */
     public String shortenURL(String longURL) {
         StringBuilder shortUrl = new StringBuilder();
-        for (int i = 0; i < keyLength; i++) {
+        for (int i = 0; i < Constants.SHORT_URL_LENGTH; i++) {
             shortUrl.append(characters[random.nextInt(MAX_CHARACTER_POSITION)]);
         }
 
