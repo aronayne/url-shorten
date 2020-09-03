@@ -50,9 +50,9 @@ mvn package
 docker-compose -f docker-compose-db-springboot.yml up --build
 ```
 
-### Running Docker DB instance only 
+### Running Docker DB instance only to facilitate local development.
 
-Just run the DB in a Docker process to facilitate local development.
+Just run the DB in a Docker process 
 
 ```sh
 git clone https://github.com/aronayne/url-shorten
@@ -67,6 +67,13 @@ Run docker-compose with .yml file"
 ```sh
 docker-compose -f docker-compose-db-only.yml up --build
 ```
+#### IDE
+
+Open the project in your IDE.
+
+Download maven dependencies
+
+Run the main Spring book class located at src/main/java/ShortenApplication.java
 
 ## Usage
 
@@ -105,21 +112,6 @@ This project utilises one table, select query :
 ```sh
 select * from url_store;
 ```
-
-### Installation
-
-#### IDE
-
-Clone the repo
-```sh
-git clone https://github.com/aronayne/url-shorten
-```
-
-Open the project your IDE.
-
-Download maven dependencies
-
-Run the main Spring book class located at src/main/java/ShortenApplication.java
 
 ### Swagger
 
