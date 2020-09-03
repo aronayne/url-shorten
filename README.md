@@ -38,12 +38,16 @@ This project is tested with :
 
 Steps to run PostgreSQL and the url-shorten Spring Boot app in a single Docker instance:
 
+```sh
+git clone https://github.com/aronayne/url-shorten
+```
+
 Update src/main/resources application.properties, set DB to postgres-db: 
 ```sh
 spring.datasource.url=jdbc:postgresql://postgres-db:5432/shorten-db
 ```
 
-Run commands:
+from url-shorten run commands:
 ```sh
 mvn package
 docker-compose -f docker-compose-db-springboot.yml up --build
