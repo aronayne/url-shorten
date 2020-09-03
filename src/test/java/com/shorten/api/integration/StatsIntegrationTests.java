@@ -2,6 +2,7 @@ package com.shorten.api.integration;
 
 import com.shorten.api.services.StatsService;
 import com.shorten.api.services.UrlShortenService;
+import org.hamcrest.Matchers;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,8 +65,8 @@ public class StatsIntegrationTests {
                 .then()
                 .statusCode(200)
                 .body("size()", is(2))
-                .body("meanPerDay", equalTo("1.5"))
-                .body("meanPerDay", equalTo("0.5"));
+                .body("meanPerDay", equalTo(1.5f))
+                .body("stdPerDay", equalTo(0.5f));
 
     }
 
