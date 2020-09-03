@@ -19,10 +19,13 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+/**
+ * These tests use the seeded DB data in resousrrces dir
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = {StatsSummaryIntegrationTests.Initializer.class})
-public class StatsSummaryIntegrationTests {
+@ContextConfiguration(initializers = {StatsIntegrationTests.Initializer.class})
+public class StatsIntegrationTests {
 
     @ClassRule
     public static PostgreSQLContainer postgres = new PostgreSQLContainer("postgres")
@@ -48,6 +51,21 @@ public class StatsSummaryIntegrationTests {
                 .body("size()", is(4))
                 .body("[0].dateAdded", equalTo("2020-08-26T23:00:00.000+00:00"))
                 .body("[0].count", equalTo(1));
+
+    }
+
+    @Test
+    public void testBaseUrl() {
+
+        final String dateFrom = "2020-08-27";
+        final String dateTo = "2020-08-30";
+
+        given().get(baseUrl + "/stats/" + dateFrom + "/" + dateTo)
+                .then()
+                .statusCode(200)
+                .body("size()", is(2))
+                .body("meanPerDay", equalTo("1.5"))
+                .body("meanPerDay", equalTo("0.5"));
 
     }
 

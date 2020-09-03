@@ -28,6 +28,10 @@ This project is built with the following:
 * [PostgreSQL](https://www.postgresql.org/)
 * [Apache Maven](https://maven.apache.org/)
 
+This project is tested with :
+
+* [rest-assured](http://rest-assured.io/)
+  
 ## Getting Started
 
 ### Running and connecting as a single Docker instance
@@ -44,9 +48,19 @@ mvn package
 
 ### Running Docker DB instance only (for local development)
 
-1. Update src/main/resources application.properties, set DB to local: spring.datasource.url=jdbc:postgresql://localhost:5432/shorten-db
+```sh
+git clone https://github.com/aronayne/url-shorten
+```
 
-3. docker-compose -f docker-compose-db-only.yml up --build
+1. Update src/main/resources application.properties, set DB to local: 
+```sh
+spring.datasource.url=jdbc:postgresql://localhost:5432/shorten-db
+```
+
+Run docker-compose with .yml file"
+```sh
+docker-compose -f docker-compose-db-only.yml up --build
+```
 
 ### Connecting to Docker Database
 
@@ -92,7 +106,7 @@ docker run -p 8080:8080 url-shorten/url-shorten-docker
 
 ### Generating and opening a shortened URL
 
-Invoke Put request:
+Invoke Put request passing in the longUrl parameter which represents the URL to be shortened:
 
 http://localhost:8080/shorten/?longUrl=https://www.google.com/ , the returned shortened value is used to generated a long URL.
 
@@ -103,9 +117,16 @@ http://localhost:8080/shorten/redirect/<SHORTENED_URL>
 ### Swagger
 
 After project install to view available services naviage to Swagger: 
-http://localhost:8080/swagger-ui/ . 
+```sh
+http://localhost:8080/swagger-ui/ 
+```
 
-To view swagger endpoints as JSON: http://localhost:8080/v2/api-docs
+To view swagger endpoints as JSON: 
+```sh
+http://localhost:8080/v2/api-docs
+```
+
+
 
 
 

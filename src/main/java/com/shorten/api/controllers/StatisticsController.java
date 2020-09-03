@@ -38,7 +38,7 @@ public class StatisticsController {
      * @param to
      * @return the mean, standard deviation
      */
-    @GetMapping("/stats/summary/{from}/{to}")
+    @GetMapping("/stats/{from}/{to}")
     public StatsSummary getStatsSummary(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable Date from,
                                         @DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable Date to) {
 
