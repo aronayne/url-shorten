@@ -90,7 +90,7 @@ http://localhost:8080/shorten/?longUrl=https://www.google.com/
 
 The returned shortened value is a mapping to the long URL and can be used to visit the long URL.
 
-To visit the page associated using the short URL, enter the following URL into a browser (tested with Firefox) and replace SHORTENED_URL with the shortened value returned by the previous Put request:
+To open the long URL associated that is mapped to the short URL, enter the following URL into a browser (tested with Firefox) and replace SHORTENED_URL with the shortened value returned by the previous Put request:
 
 ```sh
 http://localhost:8080/shorten/redirect/SHORTENED_URL
