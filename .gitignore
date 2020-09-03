@@ -30,6 +30,7 @@ build/
 !**/src/test/**/build/
 
 .DS_Store
+.mvn/wrapper
 
 ### VS Code ###
 .vscode/
