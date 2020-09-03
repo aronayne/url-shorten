@@ -50,9 +50,7 @@ mvn package
 docker-compose -f docker-compose-db-springboot.yml up --build
 ```
 
-### Running PostgreSQL DB in a Docker container to facilitate local development.
-
-Just run the DB in a Docker process 
+### Running PostgreSQL DB in a Docker container to facilitate local development
 
 ```sh
 git clone https://github.com/aronayne/url-shorten
@@ -73,7 +71,10 @@ Open the project in your IDE.
 
 Download maven dependencies
 
-Run the main Spring book class located at src/main/java/ShortenApplication.java
+Run the main Spring book class at location:
+```sh
+src/main/java/ShortenApplication.java
+```
 
 ## Usage
 
