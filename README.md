@@ -36,23 +36,28 @@ This project is tested with :
 
 ### Running and connecting as a single Docker instance
 
-Steps to run PostgreSQL and Spring Boot in a single Docker instance.
+Steps to run PostgreSQL and the url-shorten Spring Boot app in a single Docker instance:
 
-1. Update src/main/resources application.properties, set DB to local: spring.datasource.url=jdbc:postgresql://postgres-db:5432/shorten-db
+If not already set update src/main/resources application.properties, set DB to postgres-db: 
+```sh
+spring.datasource.url=jdbc:postgresql://postgres-db:5432/shorten-db
+```
 
 Run commands:
 ```sh
 mvn package
-3. docker-compose -f docker-compose-db-springboot.yml up --build
+docker-compose -f docker-compose-db-springboot.yml up --build
 ```
 
-### Running Docker DB instance only (for local development)
+### Running Docker DB instance only 
+
+Just run the DB in a Docker process to facilitate local development.
 
 ```sh
 git clone https://github.com/aronayne/url-shorten
 ```
 
-1. Update src/main/resources application.properties, set DB to local: 
+If not already set update src/main/resources application.properties, set DB to localhost: 
 ```sh
 spring.datasource.url=jdbc:postgresql://localhost:5432/shorten-db
 ```
@@ -62,13 +67,22 @@ Run docker-compose with .yml file"
 docker-compose -f docker-compose-db-only.yml up --build
 ```
 
-### Connecting to Docker Database
+### Connecting to Docker PostgreSQL DB
 
-1. In a separate command window open a prompt with: docker-compose exec postgres-db bash
+Ensure postgres-db container is running. To run postgres-db container refer to "Running Docker DB instance only ". 
 
-2. enter on container : psql -U my_user -d shorten-db
+In a command open a prompt with: 
+```sh
+docker-compose exec postgres-db bash
+```
 
-3. Sample query: 
+Enter on container :
+
+```sh
+psql -U my_user -d shorten-db
+```
+
+Sample query: 
 ```sh
 select * from url_store;
 ```
@@ -77,42 +91,35 @@ select * from url_store;
 
 #### IDE
 
-1. Clone the repo
-```sh
-git clone https://github.com/aronayne/url-shorten
-```
-2. Open the project your IDE.
-
-4. Download maven dependencies
-
-4. Run the main Spring book class
-
-
-#### Docker Install
-
-1. Clone the repo
+Clone the repo
 ```sh
 git clone https://github.com/aronayne/url-shorten
 ```
 
-<!-- 2. Run commands:
-```sh
-mvn package
-docker build -t url-shorten/url-shorten-docker .
-docker run -p 8080:8080 url-shorten/url-shorten-docker
-```
- -->
+Open the project your IDE.
+
+Download maven dependencies
+
+Run the main Spring book class
+
+
 ## Usage
 
 ### Generating and opening a shortened URL
 
-Invoke Put request passing in the longUrl parameter which represents the URL to be shortened:
+Invoke a Put request passing in the longUrl parameter which represents the URL to be shortened:
 
-http://localhost:8080/shorten/?longUrl=https://www.google.com/ , the returned shortened value is used to generated a long URL.
+```sh
+http://localhost:8080/shorten/?longUrl=https://www.google.com/
+```
 
-To visit the page with the shortened URL enter the following into browser replacing SHORTENED_URL with the shortened value returned by previous Put request:
+The returned shortened value is a mapping to the long URL and can be used to visit the long URL.
 
+To visit the page associated with the long URL using the shortened URL enter the following into browser replacing SHORTENED_URL with the shortened value returned by previous Put request:
+
+```sh
 http://localhost:8080/shorten/redirect/<SHORTENED_URL>
+```
 
 ### Swagger
 
