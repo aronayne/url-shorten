@@ -6,9 +6,8 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 /**
- *Ascii Characters from  '0' to '9' , add 48
- *Uppercase characters begin at 65 in ascii table (55+10) and end at 90
- *Lowercase characters begin at 97 in ascii table (61+36) and end at postion 122
+ * Map the characters 0..9, a..z , A..Z to their ascii equivalent, then randomly select
+ * 7 of these characters.
  */
 @Component
 public class URLShorten {
@@ -25,6 +24,13 @@ public class URLShorten {
 
     }
 
+    /**
+     * Initialise the character array ascii value mappings.
+     *
+     * Ascii Characters from  '0' to '9' , add 48
+     * Uppercase characters begin at 65 in ascii table (55+10), end at 90
+     * Lowercase characters begin at 97 in ascii table (61+36), end at postion 122
+     */
     private void initialiseCharacterArray() {
 
         for (int i = 0; i < 10; i++) {

@@ -13,10 +13,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project converts a long URL to a short one allows the user to utilise the short URL to open its associated long URL.
+This project converts a long URL to a short URL. The short URL can be used to open its associated long URL.
 
 
-A long URL of max length 2000 characters is converted to a short URL of 7 characters. The of URL's capacity before short URL collisions is 62^7. The probability of a short URL collision is ((1 + number of Url's added) / 62^7)
+A long URL of max length 2000 characters is converted to a short URL of 7 characters. The probability of a short URL collision is ((1 + number of URL's added) / 62^7)
 
 
 ### Built With
@@ -29,8 +29,6 @@ This project is built with the following:
 * [Apache Maven](https://maven.apache.org/)
 
 
-
-<!-- GETTING STARTED -->
 ## Getting Started
 
 ### Running and connecting as a single Docker instance
@@ -62,27 +60,16 @@ Steps to run PostgreSQL and Spring Boot in a single Docker instance.
 select * from url_store;
 ```
 
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-```sh
-npm install npm@latest -g
-```
-
 ### Installation
 
 #### IDE
 
 1. Clone the repo
 ```sh
-git clone <REPO URL>
+git clone https://github.com/aronayne/url-shorten
 ```
 2. Open the project your IDE.
-```sh
-npm install
-```
+
 4. Download maven dependencies
 
 4. Run the main Spring book class
@@ -92,17 +79,16 @@ npm install
 
 1. Clone the repo
 ```sh
-git clone <REPO URL>
+git clone https://github.com/aronayne/url-shorten
 ```
 
-1. mvn package
+Run commands:
+```sh
+mvn package
+docker build -t urlEntity-shorten/urlEntity-shorten-docker .
+docker run -p 8080:8080 urlEntity-shorten/urlEntity-shorten-docker
+```
 
-2. docker build -t urlEntity-shorten/urlEntity-shorten-docker .
-
-3. docker run -p 8080:8080 urlEntity-shorten/urlEntity-shorten-docker
-
-4. Test with: 
-<!-- USAGE EXAMPLES -->
 ## Usage
 
 ## Swagger
