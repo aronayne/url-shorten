@@ -69,8 +69,4 @@ public class SpringFoxConfig {
                 .build();
     }
 
-//    @Bean
-//    public EmailAnnotationPlugin emailPlugin() {
-//        return new EmailAnnotationPlugin();
-//    }
 }
