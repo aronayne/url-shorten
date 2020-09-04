@@ -5,6 +5,7 @@
   * [Built With](#built-with)
 * [Getting Started](#getting-started)
 * [Usage](#usage)
+* [Swagger](#swagger)
 
 ## About The Project
 
