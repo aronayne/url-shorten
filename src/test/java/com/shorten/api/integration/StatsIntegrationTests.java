@@ -38,10 +38,10 @@ public class StatsIntegrationTests {
     @Test
     public void testItemsAddedPerDayService() {
 
-        final String dateFrom = "2020-08-27";
-        final String dateTo = "2020-08-30";
+        final String fromDate = "2020-08-27";
+        final String toDate = "2020-08-30";
 
-        given().get(baseUrl + "/stats/addedCountByDay/" + dateFrom + "/" + dateTo)
+        given().get(baseUrl + "/stats/addedCountByDay/" + fromDate + "/" + toDate)
                 .then()
                 .statusCode(200)
                 .body("size()", is(4))

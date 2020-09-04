@@ -1,8 +1,6 @@
 package com.shorten.api.service;
 
 import com.shorten.api.model.StatsSummary;
-import com.shorten.api.services.StatsService;
-import com.shorten.api.services.UrlShortenService;
 import com.shorten.api.system.Utilities;
 import org.assertj.core.api.Assertions;
 import org.junit.ClassRule;
@@ -57,7 +55,7 @@ public class StatsServiceTests {
         urlShortenService.saveUrlEntity("http://www.thisisalongurltest6.com", date2);
         urlShortenService.saveUrlEntity("http://www.thisisalongurltest7.com", date2);
 
-        StatsSummary stats = statsService.getStatsSummary(date1, date2);
+        StatsSummary stats = statsService.getStatsSummary("2019-08-16", "2019-08-17");
         Assertions.assertThat(stats.getMeanPerDay()).isEqualTo(3.5);
         Assertions.assertThat(stats.getStdPerDay()).isEqualTo(0.5);
 

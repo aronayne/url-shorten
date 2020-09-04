@@ -1,9 +1,9 @@
-package com.shorten.api.services;
+package com.shorten.api.service;
 
 import com.shorten.api.exception.*;
 import com.shorten.api.model.URLShorten;
 import com.shorten.api.model.UrlEntity;
-import com.shorten.api.repositories.UrlRepository;
+import com.shorten.api.repository.UrlRepository;
 import com.shorten.api.system.Constants;
 import com.shorten.api.validation.DateAddedValidator;
 import org.slf4j.Logger;
@@ -20,11 +20,11 @@ import java.util.Optional;
 public class UrlShortenService {
 
     private Logger logger = LoggerFactory.getLogger(UrlShortenService.class);
-    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
 
-    private UrlRepository urlRepository;
-    private URLShorten urlShorten;
-    private DateAddedValidator dateAddedValidator;
+    private final UrlRepository urlRepository;
+    private final URLShorten urlShorten;
+    private final DateAddedValidator dateAddedValidator;
 
     @Autowired
     public UrlShortenService(UrlRepository urlRepository, URLShorten urlShorten, DateAddedValidator dateAddedValidator) {
@@ -43,7 +43,7 @@ public class UrlShortenService {
     public List<UrlEntity> findAllByDateAddedBetween(final String fromDate, final String toDate) {
 
         if (!dateAddedValidator.isValid(fromDate) || !dateAddedValidator.isValid(toDate)) {
-            throw new InvalidDateException("The date is invalid");
+            throw new InvalidDateException(ExceptionMessage.INVALID_DATE.message);
         } else {
             LocalDate localFromDate = LocalDate.parse(fromDate, this.dateFormatter);
             LocalDate localToDate = LocalDate.parse(toDate, this.dateFormatter);
@@ -97,7 +97,7 @@ public class UrlShortenService {
 
         final int urlLength = longUrl.length();
         if (urlLength >= Constants.MAX_LONG_URL_LENGTH) {
-            throw new LongUrlLengthExceededException("URL with length " + urlLength + " exceeds the max length of " + Constants.MAX_LONG_URL_LENGTH + " characters");
+            throw new LongUrlLengthExceededException(ExceptionMessage.LONG_URL_LENGTH_EXCEEEDED.message);
         }
 
         final Optional<UrlEntity> urlEntity = urlRepository.findFirstByLongUrl(longUrl);
@@ -107,8 +107,8 @@ public class UrlShortenService {
 
         final String shortUrl = urlShorten.shortenURL(longUrl);
         if (urlRepository.findFirstByShortUrl(shortUrl).isPresent()) {
-            logger.error("A short short URL collision occured for long URL: " + longUrl + " with generated short URL" + shortUrl);
-            throw new ShortUrlCollisionException("A short URL collision occured");
+            logger.error("A short short URL collision occurred for long URL: " + longUrl + " with generated short URL" + shortUrl);
+            throw new ShortUrlCollisionException(ExceptionMessage.SHORT_URL_COLLISION.message);
         }
 
         logger.info("Shortened URL: " + shortUrl);

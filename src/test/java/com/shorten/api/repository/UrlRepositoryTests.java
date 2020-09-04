@@ -2,7 +2,6 @@ package com.shorten.api.repository;
 
 import com.shorten.api.model.URLShorten;
 import com.shorten.api.model.UrlEntity;
-import com.shorten.api.repositories.UrlRepository;
 import com.shorten.api.system.Constants;
 import com.shorten.api.system.Utilities;
 import org.apache.commons.lang3.RandomStringUtils;

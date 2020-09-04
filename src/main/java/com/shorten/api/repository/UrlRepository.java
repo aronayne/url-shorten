@@ -1,4 +1,4 @@
-package com.shorten.api.repositories;
+package com.shorten.api.repository;
 
 import com.shorten.api.model.CountByDay;
 import com.shorten.api.model.UrlEntity;

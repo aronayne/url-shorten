@@ -1,7 +1,7 @@
-package com.shorten.api.controllers;
+package com.shorten.api.controller;
 
 import com.shorten.api.model.UrlEntity;
-import com.shorten.api.services.UrlShortenService;
+import com.shorten.api.service.UrlShortenService;
 import com.shorten.api.system.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,6 +81,8 @@ public class UrlShortenController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             String longUrl = url.get();
+            logger.info("Redirecting to the URL " + longUrl + ", short URL mapping is " +shortUrl);
+
             return ResponseEntity.status(HttpStatus.FOUND)
                     .location(URI.create(longUrl))
                     .build();

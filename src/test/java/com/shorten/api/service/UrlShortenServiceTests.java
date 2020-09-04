@@ -1,10 +1,10 @@
 package com.shorten.api.service;
 
+import com.shorten.api.exception.ExceptionMessage;
 import com.shorten.api.exception.InvalidDateException;
 import com.shorten.api.exception.LongUrlLengthExceededException;
 import com.shorten.api.exception.UrlEntityNotFoundException;
 import com.shorten.api.model.UrlEntity;
-import com.shorten.api.services.UrlShortenService;
 import org.assertj.core.api.Assertions;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -44,7 +44,7 @@ public class UrlShortenServiceTests {
     @Test
     public void testInvalidFromDateException() {
         exceptionRule.expect(InvalidDateException.class);
-        exceptionRule.expectMessage("The date is invalid");
+        exceptionRule.expectMessage(ExceptionMessage.INVALID_DATE.message);
         urlShortenService.findAllByDateAddedBetween("2020-05-33", "2020-12-05");
     }
 
@@ -54,7 +54,7 @@ public class UrlShortenServiceTests {
     @Test
     public void testInvalidToDateException() {
         exceptionRule.expect(InvalidDateException.class);
-        exceptionRule.expectMessage("The date is invalid");
+        exceptionRule.expectMessage(ExceptionMessage.INVALID_DATE.message);
         urlShortenService.findAllByDateAddedBetween("2020-05-30", "2020-12-323");
     }
 
@@ -64,7 +64,7 @@ public class UrlShortenServiceTests {
     @Test
     public void testInvalidFromAndToDateException() {
         exceptionRule.expect(InvalidDateException.class);
-        exceptionRule.expectMessage("The date is invalid");
+        exceptionRule.expectMessage(ExceptionMessage.INVALID_DATE.message);
         urlShortenService.findAllByDateAddedBetween("2020-05-33", "2020-12-323");
     }
 
@@ -89,7 +89,7 @@ public class UrlShortenServiceTests {
             sb.append("s");
         }
         exceptionRule.expect(LongUrlLengthExceededException.class);
-        exceptionRule.expectMessage("URL with length 2000 exceeds the max length of 2000 characters");
+        exceptionRule.expectMessage(ExceptionMessage.LONG_URL_LENGTH_EXCEEEDED.message);
         urlShortenService.saveUrlEntity(sb.toString(), LocalDate.now());
     }
 

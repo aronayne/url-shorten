@@ -1,17 +1,21 @@
-package com.shorten.api.controllers;
+package com.shorten.api.controller;
 
 import com.shorten.api.model.CountByDay;
 import com.shorten.api.model.StatsSummary;
-import com.shorten.api.services.StatsService;
+import com.shorten.api.service.StatsService;
 import com.shorten.api.system.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,34 +37,32 @@ public class StatisticsController {
     /**
      * Calculate per day a statistics summary of items added within a Date range.
      *
-     * @param from
-     * @param to
+     * @param fromDate
+     * @param toDate
      * @return the mean, standard deviation
      */
-    @GetMapping("/stats/{from}/{to}")
-    public StatsSummary getStatsSummary(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable LocalDate from,
-                                        @DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable LocalDate to) {
+    @GetMapping("/stats/{fromDate}/{toDate}")
+    public StatsSummary getStatsSummary(@PathVariable String fromDate, @PathVariable String toDate) {
 
-        logger.info("From" + from + ",to" + to);
+        logger.info("Calculating statistics between" + fromDate + ",to" + toDate);
 
-        return statsService.getStatsSummary(from, to);
+        return statsService.getStatsSummary(fromDate, toDate);
 
     }
 
     /**
      * Calculate the number of distinct long URL's added per day.
      *
-     * @param from
-     * @param to
+     * @param fromDate
+     * @param toDate
      * @return the number of distinct long URL's added per day.
      */
-    @GetMapping("/stats/addedCountByDay/{from}/{to}")
-    public List<CountByDay> getUrlCountbyDay(@DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable LocalDate from,
-                                             @DateTimeFormat(pattern = Constants.DATE_FORMAT) @PathVariable LocalDate to) {
+    @GetMapping("/stats/addedCountByDay/{fromDate}/{toDate}")
+    public List<CountByDay> getUrlCountbyDay(@PathVariable String fromDate, @PathVariable String toDate) {
 
-        logger.info("addedCountByDay" + from + ",to" + to);
+        logger.info("Calculating the number of distinct long URL's added by day between" + fromDate + ",to" + toDate);
 
-        return statsService.getUrlCountByDay(from, to);
+        return statsService.getUrlCountByDay(fromDate, toDate);
 
     }
 
