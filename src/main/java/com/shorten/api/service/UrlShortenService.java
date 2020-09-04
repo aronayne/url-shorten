@@ -16,6 +16,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class to URL shorten operations
+ */
 @Service
 public class UrlShortenService {
 
