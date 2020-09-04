@@ -3,20 +3,13 @@ package com.shorten.api.controller;
 import com.shorten.api.model.CountByDay;
 import com.shorten.api.model.StatsSummary;
 import com.shorten.api.service.StatsService;
-import com.shorten.api.system.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import java.time.LocalDate;
 import java.util.List;
 
 /**

@@ -19,12 +19,11 @@ import java.util.Optional;
 @Service
 public class UrlShortenService {
 
-    private Logger logger = LoggerFactory.getLogger(UrlShortenService.class);
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT);
-
     private final UrlRepository urlRepository;
     private final URLShorten urlShorten;
     private final DateAddedValidator dateAddedValidator;
+    private Logger logger = LoggerFactory.getLogger(UrlShortenService.class);
 
     @Autowired
     public UrlShortenService(UrlRepository urlRepository, URLShorten urlShorten, DateAddedValidator dateAddedValidator) {

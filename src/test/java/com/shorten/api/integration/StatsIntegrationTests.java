@@ -74,6 +74,9 @@ public class StatsIntegrationTests {
 
     }
 
+    /**
+     * Initialize the test application context
+     */
     static class Initializer
             implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {

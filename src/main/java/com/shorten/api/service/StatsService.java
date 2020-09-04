@@ -41,6 +41,7 @@ public class StatsService {
 
     /**
      * Calculate the count of distinct long URL's added within a Date interval.
+     *
      * @param fromDate
      * @param toDate
      * @return count of distinct long URL's added within a Date interval.
@@ -61,6 +62,7 @@ public class StatsService {
 
     /**
      * Calculate the mean and standard deviation of distinct long URL's added within a Date interval.
+     *
      * @param dateFrom
      * @param dateTo
      * @return mean and standard deviation of distinct long URL's added within a Date interval.

@@ -42,12 +42,12 @@ public class UrlShortenController {
     @GetMapping("/shorten/{id}")
     public ResponseEntity<UrlEntity> retrieveUrlById(@PathVariable Long id) {
 
-        final Optional<UrlEntity> url = urlShortenService.findById(id);
+        final Optional<UrlEntity> urlEntityOptional = urlShortenService.findById(id);
 
-        if (url.isEmpty()) {
+        if (urlEntityOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(url.get(), HttpStatus.OK);
+            return new ResponseEntity<>(urlEntityOptional.get(), HttpStatus.OK);
         }
 
     }
@@ -75,13 +75,13 @@ public class UrlShortenController {
     @GetMapping("/shorten/redirect/{shortUrl}")
     ResponseEntity<?> redirect(@PathVariable String shortUrl) {
 
-        final Optional<String> url = urlShortenService.findByShortUrl(shortUrl);
+        final Optional<String> longUrlOptional = urlShortenService.findByShortUrl(shortUrl);
 
-        if (url.isEmpty()) {
+        if (longUrlOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            String longUrl = url.get();
-            logger.info("Redirecting to the URL " + longUrl + ", short URL mapping is " +shortUrl);
+            String longUrl = longUrlOptional.get();
+            logger.info("Redirecting to the URL " + longUrl + ", short URL mapping is " + shortUrl);
 
             return ResponseEntity.status(HttpStatus.FOUND)
                     .location(URI.create(longUrl))
@@ -120,7 +120,7 @@ public class UrlShortenController {
         UrlEntity savedUrlEntity = urlShortenService.saveUrlEntity(longUrl, dateAdded);
 
         String shortUrl = savedUrlEntity.getShortUrl();
-        logger.info("Converted Long URL is " + shortUrl);
+        logger.info("Converted Long URL to short URL is " + shortUrl);
 
         return new ResponseEntity<String>(shortUrl, HttpStatus.OK);
 

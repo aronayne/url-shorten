@@ -30,6 +30,7 @@ public class UrlEntity {
 
     /**
      * Get the date added of the URL entity
+     *
      * @return the date added of the URL entity
      */
     public LocalDate getDateAdded() {
@@ -38,6 +39,7 @@ public class UrlEntity {
 
     /**
      * Set the date added of the URL entity
+     *
      * @param dateAdded
      */
     public void setDateAdded(LocalDate dateAdded) {
@@ -46,6 +48,7 @@ public class UrlEntity {
 
     /**
      * Get the short URL of the URL entity
+     *
      * @return
      */
     public String getShortUrl() {
@@ -54,6 +57,7 @@ public class UrlEntity {
 
     /**
      * Set the short URL of the URL entity
+     *
      * @return
      */
     public void setShortUrl(String shortUrl) {
@@ -62,6 +66,7 @@ public class UrlEntity {
 
     /**
      * Get the long URL of the URL entity
+     *
      * @return
      */
     public String getLongUrl() {
@@ -70,6 +75,7 @@ public class UrlEntity {
 
     /**
      * Set the long URL of the URL entity
+     *
      * @param longUrl
      */
     public void setLongUrl(String longUrl) {
@@ -78,6 +84,7 @@ public class UrlEntity {
 
     /**
      * Get the DB id of the URL entity
+     *
      * @return DB id of the URL entity
      */
     public Long getId() {

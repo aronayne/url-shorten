@@ -80,7 +80,9 @@ public class UrlRepositoryTests {
         Assertions.assertThat(listOutput.size()).isEqualTo(entriesToAdd);
     }
 
-
+    /**
+     * Initialize the test application context
+     */
     static class Initializer
             implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {

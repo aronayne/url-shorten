@@ -1,5 +1,7 @@
 package com.shorten.api.integration;
 
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -64,8 +66,24 @@ public class UrlShortenIntegrationTests {
                 .body("dateAdded", equalTo("2020-08-30"));
     }
 
+    /**
+     * If the long URL has not been added then a 400 status code is returned
+     */
     @Test
-    public void testShortUrl() throws Exception {
+    public void testLongUrlOmmited() {
+        Response response = given().put(baseUrl + "/shorten/");
+        System.out.println("response" + response.asString());
+        JsonPath jsonPath = new JsonPath(response.asString());
+        Assertions.assertThat(jsonPath.getInt("status")).isEqualTo(400);
+    }
+
+
+    /**
+     * Test a short URL redirects a client to the correct long URL mapping
+     * @throws Exception
+     */
+    @Test
+    public void testShortUrlRedirect() throws Exception {
 
         HttpUriRequest request = new HttpPut(baseUrl + "/shorten/?longUrl=https://www.google.com/");
         HttpResponse putResponse = HttpClientBuilder.create().build().execute(request);
@@ -78,6 +96,9 @@ public class UrlShortenIntegrationTests {
 
     }
 
+    /**
+     * Initialize the test application context
+     */
     static class Initializer
             implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
