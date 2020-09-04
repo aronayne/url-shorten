@@ -31,8 +31,13 @@ This project is tested with :
   
 ## Getting Started
 
-Either setup the project following steps "Running Spring Boot app & PostgreSQL in a single Docker container" or
- "Running PostgreSQL DB in a Docker container to facilitate local development"
+There are two brief sections of instructions described to set up this project. 
+The instructions for the section "Running Spring Boot app & PostgreSQL in a single Docker container" creates the DB 
+and Spring Boot app in a single Docker container, this is the quickest method to get up and running and use the 
+REST services.
+
+"Running PostgreSQL DB in a Docker container to facilitate local development" is marginally different, just a DB 
+Docker container is started. The Spring Boot application is started from an IDE.
 
 ### Running Spring Boot app & PostgreSQL in a single Docker container
 
@@ -59,7 +64,7 @@ Update src/main/resources application.properties, set DB to localhost:
 spring.datasource.url=jdbc:postgresql://localhost:5432/shorten-db
 ```
 
-Run docker-compose with .yml file"
+Run docker-compose with .yml file
 ```sh
 docker-compose -f docker-compose-db-only.yml up 
 ```
