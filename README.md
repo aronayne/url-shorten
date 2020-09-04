@@ -39,11 +39,6 @@ Steps to run PostgreSQL and the url-shorten Spring Boot app in a single Docker i
 git clone https://github.com/aronayne/url-shorten
 ```
 
-Update src/main/resources application.properties, set DB to postgres-db: 
-```sh
-spring.datasource.url=jdbc:postgresql://postgres-db:5432/shorten-db
-```
-
 from the cloned repo dir location 'url-shorten' run commands:
 ```sh
 mvn package
