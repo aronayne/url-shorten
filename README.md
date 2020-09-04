@@ -31,6 +31,9 @@ This project is tested with :
   
 ## Getting Started
 
+Either setup the project following steps "Running Spring Boot app & PostgreSQL in a single Docker container" or
+ "Running PostgreSQL DB in a Docker container to facilitate local development"
+
 ### Running Spring Boot app & PostgreSQL in a single Docker container
 
 Steps to run PostgreSQL and the url-shorten Spring Boot app in a single Docker instance:
@@ -39,10 +42,10 @@ Steps to run PostgreSQL and the url-shorten Spring Boot app in a single Docker i
 git clone https://github.com/aronayne/url-shorten
 ```
 
-from the cloned repo dir location 'url-shorten' run commands:
+cd into the repo dir location 'url-shorten' run commands:
 ```sh
 mvn package
-docker-compose -f docker-compose-db-springboot.yml up --build
+docker-compose -f docker-compose-db-springboot.yml up 
 ```
 
 ### Running PostgreSQL DB in a Docker container to facilitate local development
@@ -58,7 +61,7 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/shorten-db
 
 Run docker-compose with .yml file"
 ```sh
-docker-compose -f docker-compose-db-only.yml up --build
+docker-compose -f docker-compose-db-only.yml up 
 ```
 #### IDE
 
