@@ -73,7 +73,7 @@ Open the project in your IDE.
 
 Download maven dependencies
 
-Run the main Spring book class at location:
+Run the main Spring Boot class at location:
 ```sh
 src/main/java/ShortenApplication.java
 ```
